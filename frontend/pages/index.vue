@@ -1,10 +1,12 @@
 <template>
-  <main>
-    <div class="m-auto w-10/12">
-      <calendar
-        :year = selectedYear
-        :month = selectedMonth
-      />
+  <main class="h-screen bg-gray-200">
+    <div class="m-auto pt-2 w-11/12">
+      <app-card>
+        <calendar
+          :year = selectedYear
+          :month = selectedMonth
+        />
+      </app-card>
     </div>
   </main>
 </template>

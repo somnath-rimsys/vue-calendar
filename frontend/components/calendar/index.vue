@@ -1,6 +1,6 @@
 <template>
   <div class="w-full">
-    <table class="m-auto w-full text-white table">
+    <table class="m-auto w-full text-white border border-black">
       <thead>
         <tr class="h-16 flex justify-between items-center bg-indigo-600">
           <td class="ml-4"><h1 class="text-2xl">{{ selectedMonth }},{{ selectedYear }}</h1></td>
