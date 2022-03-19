@@ -52,7 +52,7 @@
         </tr>
       </tbody>
       <tbody v-else>
-        <tr><td class="text-black">Loading...</td></tr>
+        <tr class="text-center h-40 border border-blue-400"><td class="text-black">Loading...</td></tr>
       </tbody>
     </table>
   </div>
@@ -63,7 +63,7 @@ import { defineComponent, onMounted, ref } from '@nuxtjs/composition-api'
 import { Months, Weeks } from '@/lib/constants'
 
 export default defineComponent({
-  name: 'CalenderHomePage',
+  name: 'CalendarHomePage',
   props: {
     year: {
       type: Number,
@@ -143,7 +143,7 @@ export default defineComponent({
     }
 
     /**
-     * Update the calender on month change
+     * Update the calendar on month change
      */
     function monthChange(m: string): void {
       selectedMonth.value = m;
@@ -151,7 +151,7 @@ export default defineComponent({
     }
 
     /**
-     * Update the calender on year change
+     * Update the calendar on year change
      */
     function yearChange(y: number): void {
       selectedYear.value = y;

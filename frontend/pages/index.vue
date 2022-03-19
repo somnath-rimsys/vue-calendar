@@ -1,7 +1,7 @@
 <template>
   <main>
     <div class="m-auto w-10/12">
-      <calender
+      <calendar
         :year = selectedYear
         :month = selectedMonth
       />
