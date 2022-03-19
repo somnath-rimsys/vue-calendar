@@ -1,7 +1,8 @@
 <template>
   <main>
-    <div class="m-auto w-11/12">
+    <div class="m-auto w-10/12">
       <calender
+        :year = selectedYear
         :month = selectedMonth
       />
     </div>
@@ -16,9 +17,12 @@ export default defineComponent({
   name: 'HomePage',
   setup() {
     let selectedMonth = ref(Months.MAR)
+    let selectedYear = ref(new Date().getFullYear())
 
     return {
+      //data
       selectedMonth,
+      selectedYear,
     }
   },
 })

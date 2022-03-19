@@ -14,11 +14,11 @@ export enum Months {
 }
 
 export enum Weeks {
-  SUNDAY = 'Sunday',
-  MONDAY = 'Monday',
-  TUESDAY = 'Tuesday',
-  WEDNESDAY = 'Wednesday',
-  THURSDAY = 'Thursday',
-  FRIDAY = 'Friday',
-  SATURDAY = 'Saturday'
+  SUN = 'Sunday',
+  MON = 'Monday',
+  TUE = 'Tuesday',
+  WED = 'Wednesday',
+  THU = 'Thursday',
+  FRI = 'Friday',
+  SAT = 'Saturday'
 }
