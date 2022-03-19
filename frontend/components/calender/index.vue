@@ -3,22 +3,20 @@
     <table class="m-auto w-full text-white table">
       <thead>
         <tr class="h-16 flex justify-between items-center bg-indigo-600">
-          <td class="ml-4"><h1 class="text-2xl">{{ month }},{{ year }}</h1></td>
+          <td class="ml-4"><h1 class="text-2xl">{{ selectedMonth }},{{ selectedYear }}</h1></td>
           <td class="mr-4 text-right">
-            <form-select :values="months" />
+            <form-select
+              :values="months"
+              :selected="selectedMonth"
+              @change="monthChange"
+            />
             <form-input
               class="w-1/6"
-              type="text"
+              type="number"
               :value="year"
               placeholder="Year"
+              @change="yearChange"
             />
-            <form-button
-              :type="'button'"
-              :theme="'error'"
-              @onClick="btnClick"
-            >
-              Search
-            </form-button>
           </td>
         </tr>
         <tr class="h-20 flex bg-gray-800">
@@ -32,7 +30,7 @@
           </td>
         </tr>
       </thead>
-      <tbody>
+      <tbody v-if="monthDays">
         <tr
           v-for="(row, key) in monthDays"
           :key="'row'+key"
@@ -53,12 +51,15 @@
           </td>
         </tr>
       </tbody>
+      <tbody v-else>
+        <tr><td class="text-black">Loading...</td></tr>
+      </tbody>
     </table>
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent, ref } from '@nuxtjs/composition-api'
+import { defineComponent, onMounted, ref } from '@nuxtjs/composition-api'
 import { Months, Weeks } from '@/lib/constants'
 
 export default defineComponent({
@@ -77,16 +78,42 @@ export default defineComponent({
   },
 
   setup(props) {
-    let currentMonth = ref(props.month)
+    let selectedMonth = ref(props.month)
+    let selectedYear = ref(props.year)
     const weeks = ref(Weeks)
     const months = ref(Months)
-    let monthDays = ref([
-      ['','',1,2,3,4,5],
-      [6,7,8,9,10,11,12],
-      [13,14,15,16,17,18,19],
-      [20,21,22,23,24,25,26],
-      [27,28,29,30,31,'','']
-    ]);
+    let monthDays = ref();
+
+    onMounted(()=>{
+      get()
+    })
+
+    /**
+     * Get the month days array.
+     */
+    function get(): void {
+      const date: Date = new Date(`${selectedMonth.value}-${selectedYear.value}`)
+      const y: number = date.getFullYear()
+      const m: number = date.getMonth();
+      const firstDateOfMonth: number = new Date(y, m, 1).getDate()
+      const lastDateOfMonth: number = new Date(y, m + 1, 0).getDate()
+      const firstDateIndex: number = new Date(y, m, 1).getDay()
+      let isinsertStart = false
+      let tempMontsDays: Array<Array<number|string>> = []
+      for(let i=0, x=firstDateOfMonth; i<5; i++) {
+        let tempArr = []
+        for(let j=0; j<7; j++) {
+          if(firstDateIndex === j || isinsertStart) {
+            if(x <= lastDateOfMonth) tempArr.push(x++)
+            else tempArr.push('')
+            isinsertStart = true
+          }
+          else tempArr.push('')
+        }
+        tempMontsDays.push(tempArr)
+      }
+      monthDays.value = tempMontsDays
+    }
 
     /**
      * Function to remove border from the end td
@@ -115,21 +142,35 @@ export default defineComponent({
       return week.split('')[0]
     }
 
-    function btnClick() {
-      console.log('Button clicked')
+    /**
+     * Update the calender on month change
+     */
+    function monthChange(m: string): void {
+      selectedMonth.value = m;
+      get()
+    }
+
+    /**
+     * Update the calender on year change
+     */
+    function yearChange(y: number): void {
+      selectedYear.value = y;
+      get()
     }
 
     return {
       // data
-      currentMonth,
       weeks,
-      monthDays,
       months,
+      selectedMonth,
+      selectedYear,
+      monthDays,
 
       //methods
       getBorder,
       getWeekInitial,
-      btnClick,
+      monthChange,
+      yearChange,
     }
   },
 })

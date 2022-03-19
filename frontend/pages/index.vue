@@ -16,7 +16,21 @@ import { Months } from '@/lib/constants'
 export default defineComponent({
   name: 'HomePage',
   setup() {
-    let selectedMonth = ref(Months.MAR)
+    const month = [
+      Months.JAN,
+      Months.FEB,
+      Months.MAR,
+      Months.APR,
+      Months.MAY,
+      Months.JUN,
+      Months.JUL,
+      Months.AUG,
+      Months.SEP,
+      Months.OCT,
+      Months.NOV,
+      Months.DEC
+    ];
+    let selectedMonth = ref(month[new Date().getMonth()])
     let selectedYear = ref(new Date().getFullYear())
 
     return {
