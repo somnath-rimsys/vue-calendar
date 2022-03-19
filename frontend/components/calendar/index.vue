@@ -46,6 +46,7 @@
                 ?'bg-gray-600 cursor-pointer hover:bg-gray-50 hover:text-black transition'
                 : 'bg-gray-500'
             ]"
+            @click="dateClick(column)"
           >
             {{ column }}
           </td>
@@ -77,7 +78,7 @@ export default defineComponent({
     }
   },
 
-  setup(props) {
+  setup(props, { emit }) {
     let selectedMonth = ref(props.month)
     let selectedYear = ref(props.year)
     const weeks = ref(Weeks)
@@ -158,6 +159,14 @@ export default defineComponent({
       get()
     }
 
+    function dateClick(d: string): void {
+      if(d) {
+        const fullDate: string = `${selectedYear.value}-${selectedMonth.value}-${d} ${new Date().getHours()}:${new Date().getMinutes()}:${new Date().getSeconds()}`
+        const unixTimestamp = new Date(fullDate).getTime()
+        emit('dateSelect', unixTimestamp)
+      }
+    }
+
     return {
       // data
       weeks,
@@ -171,6 +180,7 @@ export default defineComponent({
       getWeekInitial,
       monthChange,
       yearChange,
+      dateClick
     }
   },
 })

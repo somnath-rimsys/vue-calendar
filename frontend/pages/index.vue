@@ -5,6 +5,7 @@
         <calendar
           :year = selectedYear
           :month = selectedMonth
+          @dateSelect="dateSelect"
         />
       </app-card>
     </div>
@@ -35,10 +36,20 @@ export default defineComponent({
     let selectedMonth = ref(month[new Date().getMonth()])
     let selectedYear = ref(new Date().getFullYear())
 
+    /**
+     * Event when a date is selected
+     */
+    function dateSelect(timestamp: number):void {
+      console.log(timestamp)
+    }
+
     return {
       //data
       selectedMonth,
       selectedYear,
+
+      // methods
+      dateSelect,
     }
   },
 })
