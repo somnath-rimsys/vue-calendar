@@ -60,5 +60,10 @@ export default {
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {
+  },
+
+  generate: {
+    dir: 'dist', // gh_pages/ instead of dist/
+    subFolders: false // HTML files are generated according to the route path
   }
 }
